@@ -28,6 +28,7 @@
 
 (depends-on "clojure-mode")
 (depends-on "cider")
+(depends-on "clj-refactor")
 (depends-on "paredit")
 (depends-on "base16-theme")
 (depends-on "rainbow-delimiters")

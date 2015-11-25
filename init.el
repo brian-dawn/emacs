@@ -93,4 +93,45 @@
 (require 'ace-jump-mode)
 (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(require 'clj-refactor)
+
+(defun my-clojure-mode-hook ()
+    (clj-refactor-mode 1)
+    (yas-minor-mode 1) ; for adding require/use/import
+    (cljr-add-keybindings-with-prefix "C-c C-m"))
+
+(add-hook 'clojure-mode-hook #'my-clojure-mode-hook)
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; CUSTOM FUNCTIONS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun spacemacs//cider-eval-in-repl-no-focus (form)
+   "Insert FORM in the REPL buffer and eval it."
+   (while (string-match "\\`[ \t\n\r]+\\|[ \t\n\r]+\\'" form)
+    (setq form (replace-match "" t t form)))
+   (with-current-buffer (cider-current-repl-buffer)
+    (let ((pt-max (point-max)))
+      (goto-char pt-max)
+      (insert form)
+      (indent-region pt-max (point))
+      (cider-repl-return))))
+
+
+(defun spacemacs/cider-send-function-to-repl ()
+  "Send current function to REPL and evaluate it without changing
+the focus."
+  (interactive)
+  (spacemacs//cider-eval-in-repl-no-focus (cider-defun-at-point)))
+
+(eval-after-load 'cider
+  '(define-key cider-mode-map
+     (kbd "C-c C-f")
+     'spacemacs/cider-send-function-to-repl))
+
 
