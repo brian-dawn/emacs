@@ -38,3 +38,13 @@
 
 (depends-on "ace-jump-mode")
 (depends-on "projectile")
+(depends-on "exec-path-from-shell")
+
+(depends-on "haskell-mode")
+(depends-on "company-ghc")
+
+(depends-on "pixie-mode")
+(depends-on "fsharp-mode")
+
+(depends-on "markdown-mode")
+(depends-on "elm-mode")

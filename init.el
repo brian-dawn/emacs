@@ -3,6 +3,13 @@
 (require 'cask "~/.cask/cask.el")
 (cask-initialize)
 
+(add-to-list 'exec-path "/usr/local/bin")
+
+;; Put all backup files in this directory.
+(setq backup-directory-alist `(("." .  "~/.saves")))
+
+(global-auto-revert-mode t)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Themes
 ;;;;;;;;;;;;;;;;;;;;;;;;
@@ -19,6 +26,59 @@
 ;; Plugin enabling/configuring.
 ;;;;;;;;;;;;;;;;;;;;;;;;
 
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
+;; Haskell stuff
+(let ((my-cabal-path (expand-file-name "~/.cabal/bin")))
+  (setenv "PATH" (concat my-cabal-path ":" (getenv "PATH")))
+  (add-to-list 'exec-path my-cabal-path))
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ansi-color-names-vector
+   ["#1d1f21" "#cc6666" "#b5bd68" "#f0c674" "#81a2be" "#b294bb" "#81a2be" "#c5c8c6"])
+ '(ansi-term-color-vector
+   [unspecified "#1d1f21" "#cc6666" "#b5bd68" "#f0c674" "#81a2be" "#b294bb" "#81a2be" "#c5c8c6"])
+ '(custom-enabled-themes (quote (base16-tomorrow-dark)))
+ '(custom-safe-themes
+   (quote
+    ("232f715279fc131ed4facf6a517b84d23dca145fcc0e09c5e0f90eb534e1680f" "e033c4abd259afac2475abd9545f2099a567eb0e5ec4d1ed13567a77c1919f8f" "e254f8e18ba82e55572c5e18f3ac9c2bd6728a7e500f6cc216e0c6f6f8ea7003" "b1bcb837df0455af8e91114b7a3bddfa084cde32ceb16b1b468d5e5e8605a835" "91fba9a99f7b64390e1f56319c3dbbaed22de1b9676b3c73d935bf62277b799c" "50e7f9d112e821e42bd2b8410d50de966c35c7434dec12ddea99cb05dd368dd8" "9e87bddff84cbce28c01fa05eb22f986d770628fa202cd5ca0cd7ed53db2f068" "f21caace402180ab3dc5157d2bb843c4daafbe64aadc362c9f4558ac17ce43a2" "1462969067f2ff901993b313085d47e16badeec58b63b9ed67fa660cebaaddae" "75c0b9f9f90d95ac03f8647c75a91ec68437c12ff598e2abb22418cd4b255af0" "bf81a86f9cfa079a7bb9841bc6ecf9a2e8999b85e4ae1a4d0138975921315713" "f245c9f24b609b00441a6a336bcc556fe38a6b24bfc0ca4aedd4fe23d858ba31" "1dfd7a150e80fdb4563f594716d09d849f4c50bcea12825bd8d284c05a87a3e1" "3a3917dbcc6571ef3942c2bf4c4240f70b5c4bc0b28192be6d3f9acd83607a24" "abb628b7ecdc570350db589ea22f8ae0f4b9e5304ea313532acbb84d703eecbd" "2162da67ce86c514aff010de1b040fb26663ca42afebc2de26515d741121c435" default)))
+ '(haskell-stylish-on-save t))
+(add-hook 'haskell-mode-hook #'haskell-doc-mode)
+
+;; Pixie lang
+(add-hook 'pixie-mode-hook #'inf-clojure-minor-mode)
+
+;; Rust stuff
+(add-hook 'rust-mode-hook #'racer-mode)
+(add-hook 'racer-mode-hook #'eldoc-mode)
+
+(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+
+;; Setting up configurations when you load rust-mode
+(add-hook 'rust-mode-hook
+     '(lambda ()
+     ;; Enable racer
+     (racer-activate)
+     ;; Hook in racer with eldoc to provide documentation
+     (racer-turn-on-eldoc)
+     ;; Use flycheck-rust in rust-mode
+     (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+     ;; Use company-racer in rust mode
+     (set (make-local-variable 'company-backends) ' (company-racer))
+     ;; Key binding to jump to method definition
+     (local-set-key (kbd "M-.") #'racer-find-definition)
+     ;; Key binding to auto complete and indent
+     (local-set-key (kbd "TAB") #'racer-complete-or-indent)))
+
+;; Clojure stuff
+(require 'exec-path-from-shell)
+(exec-path-from-shell-initialize)
+
+
 (require 'rainbow-delimiters)
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 
@@ -31,6 +91,9 @@
            (lambda ()
              (cider-turn-on-eldoc-mode)
              (rainbow-delimiters-mode 1)))
+
+;; Clojure/Hoplon
+(add-to-list 'auto-mode-alist '("\\.cljs\\.hl\\'" . clojurescript-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -134,4 +197,13 @@ the focus."
      (kbd "C-c C-f")
      'spacemacs/cider-send-function-to-repl))
 
-
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(company-scrollbar-bg ((t (:background "#34383c"))))
+ '(company-scrollbar-fg ((t (:background "#282b2e"))))
+ '(company-tooltip ((t (:inherit default :background "#212426"))))
+ '(company-tooltip-common ((t (:inherit font-lock-constant-face))))
+ '(company-tooltip-selection ((t (:inherit font-lock-function-name-face)))))
