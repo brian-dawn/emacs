@@ -52,28 +52,6 @@
 ;; Pixie lang
 (add-hook 'pixie-mode-hook #'inf-clojure-minor-mode)
 
-;; Rust stuff
-(add-hook 'rust-mode-hook #'racer-mode)
-(add-hook 'racer-mode-hook #'eldoc-mode)
-
-(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
-
-;; Setting up configurations when you load rust-mode
-(add-hook 'rust-mode-hook
-     '(lambda ()
-     ;; Enable racer
-     (racer-activate)
-     ;; Hook in racer with eldoc to provide documentation
-     (racer-turn-on-eldoc)
-     ;; Use flycheck-rust in rust-mode
-     (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
-     ;; Use company-racer in rust mode
-     (set (make-local-variable 'company-backends) ' (company-racer))
-     ;; Key binding to jump to method definition
-     (local-set-key (kbd "M-.") #'racer-find-definition)
-     ;; Key binding to auto complete and indent
-     (local-set-key (kbd "TAB") #'racer-complete-or-indent)))
-
 ;; Clojure stuff
 (require 'exec-path-from-shell)
 (exec-path-from-shell-initialize)
@@ -109,6 +87,9 @@
            (lambda ()
              (cider-turn-on-eldoc-mode)
              (paredit-mode 1)))
+
+;; For being inside tmux or terminal.
+(global-set-key (kbd "C-c C-s") 'paredit-forward-slurp-sexp)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
