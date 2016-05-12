@@ -62,12 +62,12 @@
 
 (add-hook 'cider-repl-mode-hook
           (lambda ()
-            (cider-turn-on-eldoc-mode)
+            (eldoc-mode 1)
             (rainbow-delimiters-mode 1)))
 
 (add-hook 'cider-mode-hook
            (lambda ()
-             (cider-turn-on-eldoc-mode)
+             (eldoc-mode 1)
              (rainbow-delimiters-mode 1)))
 
 ;; Clojure/Hoplon
@@ -80,12 +80,12 @@
 
 (add-hook 'cider-repl-mode-hook
           (lambda ()
-            (cider-turn-on-eldoc-mode)
+            (eldoc-mode 1)
             (paredit-mode 1)))
 
 (add-hook 'cider-mode-hook
            (lambda ()
-             (cider-turn-on-eldoc-mode)
+             (eldoc-mode 1)
              (paredit-mode 1)))
 
 ;; For being inside tmux or terminal.
