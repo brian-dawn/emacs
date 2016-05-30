@@ -91,6 +91,9 @@
 ;; For being inside tmux or terminal.
 (global-set-key (kbd "C-c C-s") 'paredit-forward-slurp-sexp)
 
+(setq cider-repl-use-pretty-printing t)
+(setq cider-auto-test-mode t)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (require 'smex)
