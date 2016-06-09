@@ -9,6 +9,7 @@
 (setq backup-directory-alist `(("." .  "~/.saves")))
 
 (global-auto-revert-mode t)
+(setq company-idle-delay 0) ;; Autocomplete super fast.
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Themes
@@ -27,6 +28,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
+(global-set-key (kbd "C-c C-g") 'ace-window)
+
 
 ;; Haskell stuff
 (let ((my-cabal-path (expand-file-name "~/.cabal/bin")))
