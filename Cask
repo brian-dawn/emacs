@@ -37,6 +37,7 @@
 (depends-on "company")
 
 (depends-on "ace-jump-mode")
+(depends-on "ace-window")
 (depends-on "projectile")
 (depends-on "exec-path-from-shell")
 

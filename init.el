@@ -10,6 +10,10 @@
 
 (global-auto-revert-mode t)
 
+;; Autocomplete super fast.
+(setq company-idle-delay 0)
+(setq company-minimum-prefix-length 1)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Themes
 ;;;;;;;;;;;;;;;;;;;;;;;;
@@ -27,6 +31,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
+(global-set-key (kbd "C-c C-g") 'ace-window)
+
 
 ;; Haskell stuff
 (let ((my-cabal-path (expand-file-name "~/.cabal/bin")))
@@ -91,6 +97,9 @@
 
 ;; For being inside tmux or terminal.
 (global-set-key (kbd "C-c C-s") 'paredit-forward-slurp-sexp)
+
+(setq cider-repl-use-pretty-printing t)
+(setq cider-auto-test-mode t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
