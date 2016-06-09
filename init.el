@@ -9,7 +9,10 @@
 (setq backup-directory-alist `(("." .  "~/.saves")))
 
 (global-auto-revert-mode t)
-(setq company-idle-delay 0) ;; Autocomplete super fast.
+
+;; Autocomplete super fast.
+(setq company-idle-delay 0)
+(setq company-minimum-prefix-length 1)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Themes
