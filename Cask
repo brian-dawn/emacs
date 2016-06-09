@@ -48,3 +48,6 @@
 
 (depends-on "markdown-mode")
 (depends-on "elm-mode")
+
+(depends-on "geiser") ;; Chicken scheme!!
+(depends-on "alchemist") ;; Elixir
