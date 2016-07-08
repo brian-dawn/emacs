@@ -56,6 +56,7 @@
  '(haskell-stylish-on-save t))
 (add-hook 'haskell-mode-hook #'haskell-doc-mode)
 
+
 ;; Pixie lang
 (add-hook 'pixie-mode-hook #'inf-clojure-minor-mode)
 
@@ -83,7 +84,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (require 'paredit)
-(add-hook 'prog-mode-hook 'paredit-mode)
+(add-hook 'cider-mode-hook 'paredit-mode)
 
 (add-hook 'cider-repl-mode-hook
           (lambda ()
@@ -160,6 +161,11 @@
 
 
 
+;; Elm stuff
+(add-hook 'flycheck-mode-hook 'flycheck-elm-setup)
+(with-eval-after-load 'flycheck '(add-hook 'flycheck-mode-hook #'flycheck-elm-setup))
+(add-hook 'elm-mode-hook #'elm-oracle-setup-completion)
+(add-hook 'elm-mode-hook (lambda () (setq company-backends '(company-elm))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; CUSTOM FUNCTIONS

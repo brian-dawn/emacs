@@ -48,7 +48,10 @@
 (depends-on "fsharp-mode")
 
 (depends-on "markdown-mode")
+
 (depends-on "elm-mode")
+(depends-on "flycheck-elm")
+(depends-on "elm-oracle")
 
 (depends-on "geiser") ;; Chicken scheme!!
 (depends-on "alchemist") ;; Elixir
