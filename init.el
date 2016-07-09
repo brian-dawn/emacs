@@ -81,10 +81,11 @@
 ;; Clojure/Hoplon
 (add-to-list 'auto-mode-alist '("\\.cljs\\.hl\\'" . clojurescript-mode))
 
+;; Paredit
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (require 'paredit)
-(add-hook 'cider-mode-hook 'paredit-mode)
+(add-hook 'clojure-mode-hook 'paredit-mode)
 
 (add-hook 'cider-repl-mode-hook
           (lambda ()
